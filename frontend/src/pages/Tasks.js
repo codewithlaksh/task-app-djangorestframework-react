@@ -24,7 +24,7 @@ const Tasks = (props) => {
     const handleDelete = async (e) => {
         if (window.confirm("Are you sure, you want to delete this task ?")) {   
             let response = await fetch(`/api/deleteTask/${e.target.id}`, {
-                method: "POST"
+                method: "DELETE"
             })
             let data = await response.json()
             props.showAlert(`${data.message}`, `${data.msg_category}`)

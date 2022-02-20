@@ -17,6 +17,9 @@ const EditTask = (props) => {
         let response = await fetch(`/api/getTask/${params.id}`);
         let data = await response.json()
         setTask(data.task)
+        if (data.status === "not-found"){
+            navigate("/404")
+        }
     }
 
     function getCookie(name) {
@@ -37,7 +40,7 @@ const EditTask = (props) => {
     
     const handleSubmit = async () => {
         let response = await fetch(`/api/updateTask/${params.id}`, {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-type": "application/json",
                 "X-CSRFToken": getCookie('csrftoken'),

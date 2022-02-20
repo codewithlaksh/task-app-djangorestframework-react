@@ -57,10 +57,12 @@ def getTasks(request):
 @api_view(['GET'])
 def getTask(request, pk):
     task = Task.objects.filter(sno=pk).first()
+    if not task:
+        return Response({'status': 'not-found'})
     serializer = TaskSerializer(task, many=False)
     return Response({'task': serializer.data})
 
-@api_view(['POST'])
+@api_view(['PUT'])
 def updateTask(request, pk):
     task = Task.objects.filter(sno=pk).first()
     serializer = TaskSerializer(instance=task, data=request.data)
@@ -68,8 +70,11 @@ def updateTask(request, pk):
         serializer.save()
     return Response({'task': serializer.data, 'message': 'Your task has been updated successfully!', 'msg_category': 'success'})
 
-@api_view(['POST'])
+@api_view(['DELETE'])
 def deleteTask(request, pk):
     task = Task.objects.filter(sno=pk).first()
-    task.delete()
+    if not task:
+        return Response({'status': 'not-found'})
+    else:
+        task.delete()
     return Response({'message': 'Your task has been deleted successfully!', 'msg_category': 'success'})

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const PageNotFound = () => {
+    document.title = "404 Error - Task App"
     return (
         <div className="container my-3">
             <div className="my-2 p-3 border rounded-3 shadow-sm">
